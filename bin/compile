@@ -142,6 +142,8 @@ fi
 
 # If we use npm on root, run npm install.
 if [ -e "$APP_SOURCE_DIR"/package.json ]; then
+  echo "-----> npm config set production"
+  npm config set production
   npm install
 fi
 
