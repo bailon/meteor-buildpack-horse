@@ -33,8 +33,11 @@ fi
 
 # Get the path to dir one above this file.
 BUILDPACK_DIR=$(cd -P -- "$(dirname -- "$0")" && cd .. && pwd -P)
+echo "-----> BUILDPACK_DIR = $BUILDPACK_DIR"
+
 # Get the directory our app is checked out in (the "BUILD_DIR"), passed by Heroku
 APP_CHECKOUT_DIR=$1
+echo "-----> APP_CHECKOUT_DIR = $APP_CHECKOUT_DIR"
 
 #
 # Find the meteor app ($APP_SOURCE_DIR).
@@ -47,6 +50,7 @@ APP_SOURCE_DIR="${APP_CHECKOUT_DIR}"
 if [ -n "$METEOR_APP_DIR" ]; then
   APP_SOURCE_DIR="${APP_SOURCE_DIR}/${METEOR_APP_DIR}"
 fi
+echo "-----> APP_SOURCE_DIR = $APP_SOURCE_DIR"
 
 # Try "$APP_SOURCE_DIR/app/" if meteor app isn't there (the "Iron scaffolding
 # tool" default).
@@ -60,9 +64,13 @@ fi
 
 # Where we will install meteor. Has to be outside the APP_CHECKOUT_DIR.
 METEOR_DIR=`mktemp -d "$BUILDPACK_DIR"/meteor-XXXX`
+echo "-----> METEOR_DIR = $METEOR_DIR"
+
 # Where we'll put things we compile.
 COMPILE_DIR_SUFFIX=".meteor/heroku_build"
 COMPILE_DIR="$APP_CHECKOUT_DIR"/"$COMPILE_DIR_SUFFIX"
+echo "-----> COMPILE_DIR = $COMPILE_DIR"
+
 # Try to minimize meteor's printing
 METEOR_PRETTY_OUTPUT=0
 
@@ -166,6 +174,7 @@ echo "-----> Building Meteor with ROOT_URL: $ROOT_URL"
 HOME=$METEOR_DIR $METEOR build --server $ROOT_URL $SERVER_ONLY_FLAG --directory $BUNDLE_DEST
 mv $BUNDLE_DEST/bundle "$COMPILE_DIR/app"
 rmdir $BUNDLE_DEST
+echo "-----> BUNDLE_DEST = $BUNDLE_DEST"
 
 # If we use npm, run npm install.
 if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
