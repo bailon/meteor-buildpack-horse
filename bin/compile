@@ -111,7 +111,7 @@ export CPPPATH="$CPATH"
 echo "-----> Installing meteor"
 
 APP_VERSION=`cat "$APP_SOURCE_DIR/.meteor/release"`
-echo "APP_VERSION = $APP_VERSION"
+echo "$APP_SOURCE_DIR/.meteor/release: $APP_VERSION"
 # APP_VERSION=${APP_VERSION:7} # remove "METEOR@" to leave only semver number. Works inwith #!/bin/bash but not #!/bin/sh
 APP_VERSION=$(echo $APP_VERSION | cut -d'@' -f 2)
 #curl -sS https://install.meteor.com | HOME="$METEOR_DIR" /bin/sh
