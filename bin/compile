@@ -113,6 +113,7 @@ echo "-----> Installing meteor"
 METEOR_VERSION=`cat "$APP_SOURCE_DIR/.meteor/release"`
 # METEOR_VERSION=${METEOR_VERSION:7} # remove "METEOR@" to leave only semver number. Works inwith #!/bin/bash but not #!/bin/sh
 METEOR_VERSION=$(echo $METEOR_VERSION | cut -d'@' -f 2)
+METEOR_VERSION=${METEOR_VERSION%$'\r'}
 #curl -sS https://install.meteor.com | HOME="$METEOR_DIR" /bin/sh # installs the latest version of Meteor
 echo "https://install.meteor.com?release=$METEOR_VERSION"
 curl -sS https://install.meteor.com?release=$METEOR_VERSION | HOME="$METEOR_DIR" /bin/sh # installs the version of Meteor that the App uses
