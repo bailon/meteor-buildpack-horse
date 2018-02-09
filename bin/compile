@@ -114,6 +114,7 @@ METEOR_VERSION=`cat "$APP_SOURCE_DIR/.meteor/release"`
 # METEOR_VERSION=${METEOR_VERSION:7} # remove "METEOR@" to leave only semver number. Works inwith #!/bin/bash but not #!/bin/sh
 METEOR_VERSION=$(echo $METEOR_VERSION | cut -d'@' -f 2)
 #curl -sS https://install.meteor.com | HOME="$METEOR_DIR" /bin/sh # installs the latest version of Meteor
+echo "https://install.meteor.com?release=$METEOR_VERSION"
 curl -sS https://install.meteor.com?release=$METEOR_VERSION | HOME="$METEOR_DIR" /bin/sh # installs the version of Meteor that the App uses
 
 METEOR="$METEOR_DIR/.meteor/meteor" # The meteor binary.
@@ -160,6 +161,12 @@ if [ -e "$APP_SOURCE_DIR"/package.json ]; then
   npm config set production
   npm install
 fi
+if [ -e "$APP_SOURCE_DIR"/package.json ]; then
+  echo "-----> meteor npm config set production"
+  meteor npm config set production
+  meteor npm install
+fi
+
 
 # Related to https://github.com/meteor/meteor/issues/2796 and 
 # https://github.com/meteor/meteor/issues/2606.  Some packages only build their
