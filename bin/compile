@@ -132,6 +132,11 @@ METEOR="$METEOR_DIR/.meteor/meteor" # The meteor binary.
 #   fi
 # fi
 
+echo "--------------------------------------------"
+node -v
+meteor --version
+echo "--------------------------------------------"
+
 #
 # Build the meteor app!
 #
